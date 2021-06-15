@@ -1,5 +1,51 @@
 from tkinter import *
 from tkinter import messagebox
+import rsaidnumber
+import datetime
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# function
+
+#def plater_id_gen():
+
+
+def logins():
+
+    id_ = rsaidnumber.parse(ID_entry.get())
+    birth_year = id_.date_of_birth.year
+    currentyaer = datetime.date.today().year
+    log = currentyaer - birth_year
+    if log >= 18:
+        try:
+            sender_email_id = 'vuyanilottoapp@gmail.com'
+            receiver_email_id = Email_entry.get()
+            password = "Vuya@2019"
+            subject = "Lotto"
+            msg = MIMEMultipart()
+            msg['From'] = sender_email_id
+            msg['To'] = receiver_email_id
+            msg['Subject'] = subject
+            body = "Your Account has been verified. Thank you for using our Lotto Application"
+            msg.attach(MIMEText(body, 'plain'))
+            text = msg.as_string()
+            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s.starttls()
+            s.login(sender_email_id, password)
+            s.sendmail(sender_email_id, receiver_email_id, text)
+            s.quit()
+            lotto.destroy()
+            import main
+        except:
+            messagebox.showerror("Error", "invalid Email, please make sure to put in a valid email Account")
+    else:
+        messagebox.showerror("NOTE!!", "Not for person under the age of 18")
+       # lotto.destroy()
+        #import main
+        #main.verify()
+
 
 
 def exitapplication():
@@ -18,7 +64,7 @@ def clear_entry():
 
 
 lotto = Tk()
-lotto.title("Claim Prize")
+lotto.title("SIGN UP")
 lotto.geometry("500x600")
 lotto.config(background='#fc0')
 
@@ -57,7 +103,7 @@ ID_entry.place(x=150, y=350)
 # button
 reset_btn = Button(lotto, text='clear', bg='blue', command=clear_entry, borderwidth=5, width=10)
 reset_btn.place(x=300, y=400)
-btn = Button(lotto, text="Claim", bg="red", width=10, borderwidth=5)
+btn = Button(lotto, text="LOGIN", bg="red", command=logins, width=10, borderwidth=5)
 btn.place(x=100, y=400)
 exit_btn = Button(lotto, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
 exit_btn.place(x=300, y=450)
