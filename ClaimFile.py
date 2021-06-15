@@ -12,9 +12,10 @@ def exitapplication():
 
 def clear_entry():
 
-    fullName_entry.delete(0, 'end')
-    Email_entry.delete(0, 'end')
-    ID_entry.delete(0, 'end')
+    accno_entry.delete(0, 'end')
+    Acctype_entry.delete(0, 'end')
+    institution_entry.delete(0, 'end')
+    accName_entry.delete(0, 'end')
 
 
 lotto = Tk()
@@ -31,35 +32,39 @@ canvas.create_image(0, 0, anchor=NW, image=img)
 
 # labels& entries
 
-head = Label(lotto, text="YOUR TICKET TO MILLIONNERS", font=("bold", 18), bg="#fc0", fg="black")
+head = Label(lotto, text="ACCOUNT DETAILS", font=("bold", 18), bg="#fc0", fg="black")
 head.place(x=70, y=10)
 
-fullname = Label(text="Full Name", fg="black", font=("bold", 15), bg="#fc0")
-fullname.place(x=30, y=250)
+accname = Label(text="Account Name", fg="black", font=("bold", 15), bg="#fc0")
+accname.place(x=30, y=250)
 
-fullName_entry = Entry(width=24, fg="black", font=("bold", 15))
-fullName_entry.place(x=150, y=250)
+accName_entry = Entry(width=24, fg="black", font=("bold", 15))
+accName_entry.place(x=150, y=250)
 
-Email = Label(text="Email", fg="black", font=("bold", 15), bg="#fc0")
-Email.place(x=30, y=300)
+accno = Label(text="Acount Nummber", fg="black", font=("bold", 15), bg="#fc0")
+accno.place(x=30, y=300)
 
-Email_entry = Entry(width=24, fg="black", font=("bold", 15))
-Email_entry.place(x=150, y=300)
+accno_entry = Entry(width=24, fg="black", font=("bold", 15))
+accno_entry.place(x=150, y=300)
+Acctype_l = Label(text="Account Type", fg="black", font=("bold", 15), bg="#fc0")
+Acctype_l.place(x=30, y=350)
 
-ID = IntVar
-ID_l = Label(text="ID number", fg="black", font=("bold", 15), bg="#fc0")
-ID_l.place(x=30, y=350)
+Acctype_entry = Entry( width=24, fg="black", font=("bold", 15))
+Acctype_entry.place(x=150, y=350)
 
-ID_entry = Entry(textvariable=ID, width=24, fg="black", font=("bold", 15))
-ID_entry.place(x=150, y=350)
+institution = Label(text="Institution", fg="black", font=("bold", 15), bg="#fc0")
+institution.place(x=30, y=400)
+
+institution_entry = Entry(width=24, fg="black", font=("bold", 15))
+institution_entry.place(x=150, y=400)
 
 
 # button
 reset_btn = Button(lotto, text='clear', bg='blue', command=clear_entry, borderwidth=5, width=10)
-reset_btn.place(x=300, y=400)
+reset_btn.place(x=300, y=450)
 btn = Button(lotto, text="Claim", bg="red", width=10, borderwidth=5)
-btn.place(x=100, y=400)
+btn.place(x=100, y=450)
 exit_btn = Button(lotto, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
-exit_btn.place(x=300, y=450)
+exit_btn.place(x=300, y=500)
 
 lotto.mainloop()
