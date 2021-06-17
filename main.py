@@ -8,9 +8,6 @@ def verify():
     pass
 
 
-
-
-
 windows = Tk()
 windows.title("Lotto Draw")
 windows.geometry("500x600")
@@ -22,10 +19,6 @@ img = PhotoImage(file="Ithuba-logo.jpg.png")
 canvas.create_image(0, 0, anchor=NW, image=img)
 
 
-
-#lottries = Label(windows, text="PANDA PUSHA PLAY", font=("bold", 20), bg="yellow", fg="black")
-#lottries.place(x=200, y=20)
-
 play = Label(windows, text="play lotto here :", font=("bold", 12), bg="#fc0", fg="white")
 play.place(x=150, y=200)
 
@@ -36,11 +29,6 @@ num4 = IntVar()
 num5 = IntVar()
 num6 = IntVar()
 
-
-#canvas=Canvas(windows,width=40,height=40)
-#canvas.grid(row=1,column=1)
-#img=ImageTk.PhotoImage(Image.open("lotto.png"))
-#canvas.create_image(0,-50,image=img)
 
 txt1 = Spinbox(windows, from_=1, to=49, textvariable=num1, width=2, font=("bold", 20))
 txt1.place(x=30, y=250)
@@ -84,15 +72,9 @@ def luck():
     my_list.sort()
 
     todaylotto = sorted(random.sample(range(1, 49), 6))
-
+    print(any(my_list))
     if any(my_list) < 0 or any(my_list) > 50:
         messagebox.showinfo("NOOO", "Follow the rules")
-        num1.delete(0, END)
-        num2.delete(0, END)
-        num3.delete(0, END)
-        num4.delete(0, END)
-        num5.delete(0, END)
-        num6.delete(0, END)
 
     else:
         messagebox.showinfo("hurray", "Get ready")
@@ -101,41 +83,50 @@ def luck():
             same = set(todaylotto).intersection(set(my_list))
             if len(same) == 6:
                 result_answer.config(
-                    text="Jackpot Hurray \n" + "You just got your self Price : R10, 000 000.00" + "\n Today Lotto Numbers are" + str(
-                        todaylotto))
+                    text="Jackpot Hurray \n" + "You just got your self Price : R10, 000 000.00" +
+                         "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
+                price = 10000000
             elif len(same) == 5:
                 result_answer.config(
-                    text="Felicitations" + "You got 5 numbers correct" + "\n With this Outstanding Achievement" + "You won yourself R8, 584.00" + "\n Today Lotto Numbers are" + str(
-                        todaylotto))
+                    text="Felicitations" + "You got 5 numbers correct" + "\n With this Outstanding Achievement" +
+                         "You won yourself R8, 584.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
+                price = 8584
             elif len(same) == 4:
                 result_answer.config(
-                    text="Felicitations" + "You got 4 numbers correct" + "\n With this Meritorious Achievement" + "You won yourself R2, 384.00" + "\n Today Lotto Numbers are" + str(
-                        todaylotto))
+                    text="Felicitations" + "You got 4 numbers correct" + "\n With this Meritorious Achievement" +
+                         "You won yourself R2, 384.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
+                price = 2384
             elif len(same) == 3:
                 result_answer.config(
-                    text="Felicitations" + "You got 3 numbers correct" + "\n With this Substantial Achievement" + "You won yourself R100.50" + "\n Today Lotto Numbers are" + str(
-                        todaylotto))
+                    text="Felicitations" + "You got 3 numbers correct" + "\n With this Substantial Achievement" +
+                         "You won yourself R100.50" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
+                price = 100.50
             elif len(same) == 2:
                 result_answer.config(
-                    text="Felicitations" + "You got 2 numbers correct" + "\n With this Adequate Achievement" + "You won yourself R20.00" + "\n Today Lotto Numbers are" + str(
-                        todaylotto))
+                    text="Felicitations" + "You got 2 numbers correct" + "\n With this Adequate Achievement" +
+                         "You won yourself R20.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
+                price = 20
             elif len(same) == 1:
                 messagebox.showinfo("RESULT",
                                     "We are sorry you only got one correct lotto numbers are: " + str(todaylotto))
+                price = 0
             elif len(same) == 0:
                 messagebox.showinfo("RESULT", "Try again Lotto numbers : " + str(todaylotto))
+                price = 0
+        return price
 
 
+wined_prize = luck()
 
 btn = Button(windows, text="CHECK YOUR RESULTS", bg="red", command=luck, borderwidth=5, width=15)
 btn.place(x=100, y=450)
 exit_btn = Button(windows, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
 exit_btn.place(x=300, y=500)
-claimbtn=Button(windows, text='Claim Prize', bg='blue', command=claim, borderwidth=5, width=10, state="disable")
+claimbtn = Button(windows, text='Claim Prize', bg='blue', command=claim, borderwidth=5, width=10, state="disable")
 claimbtn.place(x=300, y=450)
 windows.mainloop()

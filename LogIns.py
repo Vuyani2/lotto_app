@@ -2,14 +2,20 @@ from tkinter import *
 from tkinter import messagebox
 import rsaidnumber
 import datetime
-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # function
 
-#def plater_id_gen():
+
+def player_id(fullnm):
+    pos = fullname.find(" ")
+    surname = fullname[pos+1]
+    name = fullname[0]
+    sliced = ID_entry.get
+    idSliced = sliced[slice(6, 10, 1)]
+    idplayer = surname+name+idSliced
 
 
 def logins():
@@ -42,10 +48,6 @@ def logins():
             messagebox.showerror("Error", "invalid Email, please make sure to put in a valid email Account")
     else:
         messagebox.showerror("NOTE!!", "Not for person under the age of 18")
-       # lotto.destroy()
-        #import main
-        #main.verify()
-
 
 
 def exitapplication():
@@ -107,5 +109,7 @@ btn = Button(lotto, text="LOGIN", bg="red", command=logins, width=10, borderwidt
 btn.place(x=100, y=400)
 exit_btn = Button(lotto, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
 exit_btn.place(x=300, y=450)
+
+
 
 lotto.mainloop()
