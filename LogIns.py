@@ -6,48 +6,112 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-# function
+# CLASS
+class Player:
+
+    def __init__(self, fullname, email, id_no, player_id, date_played):
+        self.ID_NO = id_no
+        self.email = email
+        self.fullname = fullname
+        self.player_id = player_id
+        self.date_played = date_played
+
+    def __str__(self):
+        return "name: " + self.fullname + " email: " + self.email + " id number: " + self.ID_NO + " player id: " + self.player_id + " date played: " + str(self.date_played)
 
 
-def player_id(fullnm):
-    pos = fullname.find(" ")
-    surname = fullname[pos+1]
-    name = fullname[0]
-    sliced = ID_entry.get
-    idSliced = sliced[slice(6, 10, 1)]
+    def make_dict(self):
+        current_date = datetime.date.today()
+
+        player_dict = {
+            "full name": self.fullname,
+            "email": self.email,
+            "id number": self.ID_NO,
+            "player id": self.player_id,
+            "date played": current_date
+        }
+
+
+    def writef(self, dictionary):
+        import json
+
+        dictionary = json.dumps(dictionary)
+        print(dictionary)
+        print(type(dictionary))
+        # with open("player_info.txt", "w")as my_file:
+
+       #     my_file.writelines(f'Name : {self.fullname} \n  Email : {self.email} \n ID Number : {self.ID_NO} \n '
+       #             f'Player ID : {self.player_id} \n Date Played : {self.date_played}')
+    #obj_player = Player(fullName_entry.get(), Email_entry, ID_entry.get(), player_id(), current_date)
+
+
+
+#   FUNCTIONS
+
+
+def player_id(fullnm, id_param):
+    pos = fullnm.find(" ")
+    surname = fullnm[pos+1]
+    name = fullnm[0]
+    idSliced = id_param[slice(6, 10, 1)]
     idplayer = surname+name+idSliced
+
+    return idplayer
+
+
+def send_email():
+    try:
+        sender_email_id = 'vuyanilottoapp@gmail.com'
+        receiver_email_id = Email_entry.get()
+        password = "Vuya@2019"
+        subject = "Lotto"
+        msg = MIMEMultipart()
+        msg['From'] = sender_email_id
+        msg['To'] = receiver_email_id
+        msg['Subject'] = subject
+        body = "Your Account has been verified. Thank you for using our Lotto Application"
+        msg.attach(MIMEText(body, 'plain'))
+        text = msg.as_string()
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login(sender_email_id, password)
+        s.sendmail(sender_email_id, receiver_email_id, text)
+        s.quit()
+        return True
+    except Exception:
+        messagebox.showerror("Error", Exception)
+        return  False
 
 
 def logins():
 
     id_ = rsaidnumber.parse(ID_entry.get())
     birth_year = id_.date_of_birth.year
+    current_date = datetime.date.today()
     currentyaer = datetime.date.today().year
     log = currentyaer - birth_year
     if log >= 18:
-        try:
-            sender_email_id = 'vuyanilottoapp@gmail.com'
-            receiver_email_id = Email_entry.get()
-            password = "Vuya@2019"
-            subject = "Lotto"
-            msg = MIMEMultipart()
-            msg['From'] = sender_email_id
-            msg['To'] = receiver_email_id
-            msg['Subject'] = subject
-            body = "Your Account has been verified. Thank you for using our Lotto Application"
-            msg.attach(MIMEText(body, 'plain'))
-            text = msg.as_string()
-            s = smtplib.SMTP('smtp.gmail.com', 587)
-            s.starttls()
-            s.login(sender_email_id, password)
-            s.sendmail(sender_email_id, receiver_email_id, text)
-            s.quit()
-            lotto.destroy()
-            import main
-        except:
+
+        if send_email():
+            # try:
+                person = Player(fullName_entry.get(), Email_entry.get(), ID_entry.get(), player_id(fullName_entry.get(), ID_entry.get()), datetime.date.today())
+                print(type(str(person)))
+
+
+                with open("player_info.txt", "w+") as file:
+                    file.write(str(person))
+                lotto.destroy()
+                import main
+
+            # except Exception:
+            #     print(Exception)
+        else:
             messagebox.showerror("Error", "invalid Email, please make sure to put in a valid email Account")
+
     else:
         messagebox.showerror("NOTE!!", "Not for person under the age of 18")
+    # obj_player = Player(fullName_entry.get(), Email_entry.get(), ID_entry.get(), player_id(fullName_entry.get()), current_date)
+    # Player.obj_player.writef()
 
 
 def exitapplication():

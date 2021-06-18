@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 import random
 import tkinter.ttk
@@ -73,6 +74,8 @@ def luck():
 
     todaylotto = sorted(random.sample(range(1, 49), 6))
     print(any(my_list))
+
+
     if any(my_list) < 0 or any(my_list) > 50:
         messagebox.showinfo("NOOO", "Follow the rules")
 
@@ -118,10 +121,25 @@ def luck():
             elif len(same) == 0:
                 messagebox.showinfo("RESULT", "Try again Lotto numbers : " + str(todaylotto))
                 price = 0
+
+        draw_list = {
+            "my list": my_list,
+            "winning prize": price,
+            "todays lotto": todaylotto
+        }
+
+        draw_list = json.dumps(draw_list)
+
+        print(draw_list)
+        print(type(draw_list))
+
+        with open("player_info.txt", "a+") as text_file:
+            text_file.write(draw_list)
+
+
         return price
 
 
-wined_prize = luck()
 
 btn = Button(windows, text="CHECK YOUR RESULTS", bg="red", command=luck, borderwidth=5, width=15)
 btn.place(x=100, y=450)

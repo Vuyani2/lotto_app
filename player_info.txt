@@ -1,0 +1,1 @@
+name: vuyani kunelisi email: vuyanikunelisi@gmail.com id number: 0003195216084 player id: kv5216 date played: 2021-06-18{"my list": [9, 14, 21, 28, 35, 39], "winning prize": 20, "todays lotto": [1, 9, 12, 20, 28, 36]}

@@ -1,8 +1,13 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 import tkinter as tk
-import main
-
+import datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import smtplib
+import requests
+from tkinter import ttk
 
 def exitapplication():
     msgbox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application', icon='warning')
@@ -15,17 +20,49 @@ def exitapplication():
 def clear_entry():
 
     accno_entry.delete(0, 'end')
-    Acctype_entry.delete(0, 'end')
-    institution_entry.delete(0, 'end')
     accName_entry.delete(0, 'end')
 
+url = "http://api.exchangeratesapi.io/v1/latest?access_key=fab4bca97cc9094b963030c6064ed5c2"
 
-class player:
-    def __init__(self,fullname,email,ID_NO,prize):
-        self.prize = prize
-        self.ID_NO = ID_NO
-        self.email = email
-        self.fullname = fullname
+req = requests.get(url)
+
+result = req.json()
+print(result)
+rates = result['rates'].keys()
+
+def convertor():
+    with open("player_info.txt", "r", encoding='utf-8-sig', errors='ignore') as text_file:
+        line = text_file.readline()
+        position = line.find("winning prize")
+        end_of_line = line[slice(position + 16, len(line))]
+        amount = end_of_line.split(",")[0]
+
+    with open("player_info.txt", "r", encoding='utf-8-sig', errors='ignore') as text_file:
+        line = text_file.readline()
+        position = line.find("email")
+        end_of_line = line[slice(position + 7, len(line))]
+        email = end_of_line.split(" ")[0]
+
+    prize = float(amount)
+    new_amnt = prize * result['rates'][lst.get(ACTIVE)]  # converting currency
+
+
+    sender_email_id = 'vuyanilottoapp@gmail.com'
+    receiver_email_id = email
+    password = "Vuya@2019"
+    subject = "Wined Prize"
+    msg = MIMEMultipart()
+    msg['From'] = sender_email_id
+    msg['To'] = receiver_email_id
+    msg['Subject'] = subject
+    body = "Thank you for playing you have Won yourself an amount of " + str(new_amnt) + " in your chosen currency " +"\n your account name is : "+str(accName_entry.get()) +"\n your Account number is : "+ str(accno_entry.get())
+    msg.attach(MIMEText(body, 'plain'))
+    text = msg.as_string()
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login(sender_email_id, password)
+    s.sendmail(sender_email_id, receiver_email_id, text)
+    s.quit()
 
 
 
@@ -42,6 +79,12 @@ canvas.create_image(0, 0, anchor=NW, image=img)
 
 
 # labels& entries
+lst = ttk.Combobox(lotto)
+rates = list(rates)
+lst["values"] = rates
+for i in rates:
+    lst.insert(END,str(i))
+    lst.place(x=175, y=150)
 
 head = Label(lotto, text="ACCOUNT DETAILS", font=("bold", 18), bg="#fc0", fg="black")
 head.place(x=200, y=10)
@@ -76,14 +119,11 @@ institution_entry.place(x=250, y=400)
 institution = Label(text="Institution", fg="black", font=("bold", 15), bg="#fc0")
 institution.place(x=30, y=400)
 
-#institution_entry = Entry(width=24, fg="black", font=("bold", 15))
-#institution_entry.place(x=250, y=400)
-
 
 # button
 reset_btn = Button(lotto, text='clear', bg='blue', command=clear_entry, borderwidth=5, width=10)
 reset_btn.place(x=300, y=450)
-btn = Button(lotto, text="Claim", bg="red", width=10, borderwidth=5)
+btn = Button(lotto, text="Claim", bg="red", width=10, borderwidth=5, command=convertor)
 btn.place(x=100, y=450)
 exit_btn = Button(lotto, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
 exit_btn.place(x=300, y=500)
