@@ -9,6 +9,7 @@ import smtplib
 import requests
 from tkinter import ttk
 
+
 def exitapplication():
     msgbox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application', icon='warning')
     if msgbox == 'yes':
@@ -22,12 +23,10 @@ def clear_entry():
     accno_entry.delete(0, 'end')
     accName_entry.delete(0, 'end')
 
+
 url = "http://api.exchangeratesapi.io/v1/latest?access_key=fab4bca97cc9094b963030c6064ed5c2"
-
 req = requests.get(url)
-
 result = req.json()
-print(result)
 rates = result['rates'].keys()
 
 def convertor():
@@ -45,7 +44,6 @@ def convertor():
 
     prize = float(amount)
     new_amnt = prize * result['rates'][lst.get(ACTIVE)]  # converting currency
-
 
     sender_email_id = 'vuyanilottoapp@gmail.com'
     receiver_email_id = email
@@ -65,7 +63,6 @@ def convertor():
     s.quit()
 
 
-
 lotto = Tk()
 lotto.title("Claim Prize")
 lotto.geometry("600x600")
@@ -82,10 +79,9 @@ canvas.create_image(0, 0, anchor=NW, image=img)
 lst = ttk.Combobox(lotto)
 rates = list(rates)
 lst["values"] = rates
-for i in rates:
-    lst.insert(END,str(i))
-    lst.place(x=175, y=150)
-
+lst.place(x=250, y=450,width=315)
+lbl_lst = Label(text="Type of currency", font=("bold", 15), bg="#fc0", fg="black")
+lbl_lst.place(x=30, y=450)
 head = Label(lotto, text="ACCOUNT DETAILS", font=("bold", 18), bg="#fc0", fg="black")
 head.place(x=200, y=10)
 
@@ -122,10 +118,10 @@ institution.place(x=30, y=400)
 
 # button
 reset_btn = Button(lotto, text='clear', bg='blue', command=clear_entry, borderwidth=5, width=10)
-reset_btn.place(x=300, y=450)
+reset_btn.place(x=300, y=500)
 btn = Button(lotto, text="Claim", bg="red", width=10, borderwidth=5, command=convertor)
-btn.place(x=100, y=450)
+btn.place(x=100, y=500)
 exit_btn = Button(lotto, text='Exit', bg='green', command=exitapplication, borderwidth=5, width=10)
-exit_btn.place(x=300, y=500)
+exit_btn.place(x=300, y=550)
 
 lotto.mainloop()

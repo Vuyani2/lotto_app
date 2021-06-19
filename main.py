@@ -3,6 +3,7 @@ from tkinter import *
 import random
 import tkinter.ttk
 from tkinter import messagebox
+from playsound import playsound
 
 
 def verify():
@@ -90,37 +91,44 @@ def luck():
                          "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 10000000
+                playsound('winlotto.mp3')
             elif len(same) == 5:
                 result_answer.config(
                     text="Felicitations" + "You got 5 numbers correct" + "\n With this Outstanding Achievement" +
                          "You won yourself R8, 584.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 8584
+                playsound('winlotto.mp3')
             elif len(same) == 4:
                 result_answer.config(
                     text="Felicitations" + "You got 4 numbers correct" + "\n With this Meritorious Achievement" +
                          "You won yourself R2, 384.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 2384
+                playsound('winlotto.mp3')
             elif len(same) == 3:
                 result_answer.config(
                     text="Felicitations" + "You got 3 numbers correct" + "\n With this Substantial Achievement" +
                          "You won yourself R100.50" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 100.50
+                playsound('winlotto.mp3')
             elif len(same) == 2:
                 result_answer.config(
                     text="Felicitations" + "You got 2 numbers correct" + "\n With this Adequate Achievement" +
                          "You won yourself R20.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 20
+                playsound('winlotto.mp3')
             elif len(same) == 1:
                 messagebox.showinfo("RESULT",
                                     "We are sorry you only got one correct lotto numbers are: " + str(todaylotto))
                 price = 0
+                playsound('losinglotto.mp3')
             elif len(same) == 0:
                 messagebox.showinfo("RESULT", "Try again Lotto numbers : " + str(todaylotto))
                 price = 0
+                playsound('losinglotto.mp3')
 
         draw_list = {
             "my list": my_list,
