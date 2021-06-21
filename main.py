@@ -1,7 +1,6 @@
 import json
 from tkinter import *
 import random
-import tkinter.ttk
 from tkinter import messagebox
 from playsound import playsound
 
@@ -17,7 +16,7 @@ windows.config(background="#fc0")
 
 canvas = Canvas(windows, width=312, height=167)
 canvas.place(x=70, y=20)
-img = PhotoImage(file="Ithuba-logo.jpg.png")
+img = PhotoImage(file="images/Ithuba-logo.jpg.png")
 canvas.create_image(0, 0, anchor=NW, image=img)
 
 
@@ -74,8 +73,6 @@ def luck():
     my_list.sort()
 
     todaylotto = sorted(random.sample(range(1, 49), 6))
-    print(any(my_list))
-
 
     if any(my_list) < 0 or any(my_list) > 50:
         messagebox.showinfo("NOOO", "Follow the rules")
@@ -91,44 +88,44 @@ def luck():
                          "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 10000000
-                playsound('winlotto.mp3')
+                playsound('sound/winlotto.mp3')
             elif len(same) == 5:
                 result_answer.config(
                     text="Felicitations" + "You got 5 numbers correct" + "\n With this Outstanding Achievement" +
                          "You won yourself R8, 584.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 8584
-                playsound('winlotto.mp3')
+                playsound('sound/winlotto.mp3')
             elif len(same) == 4:
                 result_answer.config(
                     text="Felicitations" + "You got 4 numbers correct" + "\n With this Meritorious Achievement" +
                          "You won yourself R2, 384.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 2384
-                playsound('winlotto.mp3')
+                playsound('sound/winlotto.mp3')
             elif len(same) == 3:
                 result_answer.config(
                     text="Felicitations" + "You got 3 numbers correct" + "\n With this Substantial Achievement" +
                          "You won yourself R100.50" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 100.50
-                playsound('winlotto.mp3')
+                playsound('sound/winlotto.mp3')
             elif len(same) == 2:
                 result_answer.config(
                     text="Felicitations" + "You got 2 numbers correct" + "\n With this Adequate Achievement" +
                          "You won yourself R20.00" + "\n Today Lotto Numbers are" + str(todaylotto))
                 claimbtn["state"] = "normal"
                 price = 20
-                playsound('winlotto.mp3')
+                playsound('sound/winlotto.mp3')
             elif len(same) == 1:
                 messagebox.showinfo("RESULT",
                                     "We are sorry you only got one correct lotto numbers are: " + str(todaylotto))
                 price = 0
-                playsound('losinglotto.mp3')
+                playsound('sound/losinglotto.mp3')
             elif len(same) == 0:
                 messagebox.showinfo("RESULT", "Try again Lotto numbers : " + str(todaylotto))
                 price = 0
-                playsound('losinglotto.mp3')
+                playsound('sound/losinglotto.mp3')
 
         draw_list = {
             "my list": my_list,
@@ -138,15 +135,9 @@ def luck():
 
         draw_list = json.dumps(draw_list)
 
-        print(draw_list)
-        print(type(draw_list))
-
-        with open("player_info.txt", "a+") as text_file:
+        with open("text_files/player_info.txt", "a+") as text_file:
             text_file.write(draw_list)
-
-
         return price
-
 
 
 btn = Button(windows, text="CHECK YOUR RESULTS", bg="red", command=luck, borderwidth=5, width=15)
